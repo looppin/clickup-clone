@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tasks;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TasksController extends Controller
 {
@@ -23,7 +25,12 @@ class TasksController extends Controller
      */
     public function create()
     {
-        return view('dashboard.add-modal');
+
+        $data = [
+            'user' => Auth::user()
+        ];
+
+        return view('dashboard.add-modal')->with($data);
     }
 
     /**
@@ -34,7 +41,22 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate(Tasks::validationRules());
+
+        $data['user_id'] = Auth::user()->id;
+
+        $task = Tasks::create($data);
+
+        if ($request->ajax()){
+            return [
+                'result' => 'ok',
+                'message' => 'Task kayıt edildi.',
+                'task' => $task
+            ];
+        }
+
+        return redirect()->route('customers.edit', [task]);
+
     }
 
     /**

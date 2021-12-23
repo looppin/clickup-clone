@@ -38,15 +38,13 @@ window.taskAdd = () => {
         // Modal slota ekle
         modal.append();
 
-        initUploadArea();
-
         window.endProgress();
 
         // Formu oluştur
         const form = new Form({
-            element: '#customer-form',
-            submitButton: '#customer-form-submit',
-            messageSlot: '#customer-form-message',
+            element: '#task-form',
+            submitButton: '#task-form-submit',
+            messageSlot: '#task-form-message',
             success: (response) => {
                 form.disableSubmitButton();
                 // window.startProgress();
@@ -113,108 +111,4 @@ window.customerDelete = (button, event, id) => {
 
             }
         });
-}
-
-const initUploadArea = (addMode = true) => {
-
-    // const actionButton = document.getElementById("upload-action-button");
-
-    console.log("locale",locale)
-
-    let uppyLocale = Turkish;
-
-    switch(locale){
-        case 'en':
-            uppyLocale = English;
-            break;
-        case 'ar':
-            uppyLocale = Arabic;
-            break;
-    }
-
-    uppy = Uppy({
-        autoProceed: true,
-        allowMultipleUploads: addMode ? false : true,
-        restrictions: {
-            allowedFileTypes: ['image/*','video/*'],
-            maxFileSize: 1024 * 1024 * 1024 * 512 // 512mb
-        } ,
-        meta: {
-            add_mode: addMode
-        },
-        locale: uppyLocale,
-
-    })
-        .use(Dashboard, {
-            trigger: '#file-list',
-            showProgressDetails: true,
-            // closeAfterFinish: true,
-            height: 300,
-            inline: true,
-            target: "#file-upload-area",
-            // showSelectedFiles: false,
-            // hideProgressAfterFinish: true,
-            // closeModalOnClickOutside: true,
-
-            proudlyDisplayPoweredByUppy: false,
-        })
-        .use(XHRUpload, {
-            endpoint: '/medias/upload',
-            fieldName: 'file',
-            timeout: 5 * 60 * 1000,
-            headers: {
-                'X-CSRF-TOKEN': document.getElementsByName('_token')[0].value
-            },
-        })
-        .on('upload', () => {
-            // actionButton.disabled = "disabled";
-        })
-        .on('complete', (result) => {
-
-            result.successful.forEach( (file) => {
-
-                // Ekleme
-                if (addMode){
-
-
-
-                    // var input = document.createElement('input');
-                    // input.type = 'hidden';
-                    // input.name = 'medias[]';
-                    // input.value = 1
-                    // document.getElementById("uploaded-media").appendChild(input)
-
-                    // Güncelleme
-                } else {
-                    const titleElement = document.querySelector('input[name=title]');
-
-                    if (titleElement.value == ""){
-                        titleElement.value = file.name;
-                    }
-
-                    document.querySelector('input[name=file_name]').value = file.response.body.name;
-                    document.querySelector('input[name=file_original_name]').value = file.name;
-                    document.querySelector('input[name=file_type]').value = file.response.body.type;
-                    document.querySelector('input[name=video_duration]').value = file.response.body.duration;
-                }
-
-
-            })
-
-            // Eğer yükleme ise
-            if (addMode){
-
-                swal({
-                    title: __('upload_complete'),
-                    icon: "success",
-                    button: __('okay')
-                })
-
-                setTimeout(function(){
-                    location.reload();
-                }, 1500)
-            }
-
-        });
-
 }

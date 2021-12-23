@@ -33,4 +33,12 @@ class Tasks extends Model
         return $this->hasMany('App\Models\User');
     }
 
+    public static function validationRules()
+    {
+        return [
+            'title' => ['required'],
+            'description' => ['required']
+        ];
+    }
+
 }
