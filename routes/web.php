@@ -16,3 +16,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//Auth
+Route::get('/login', [\App\Http\Controllers\AuthController::class,'index'])->name('login');
+Route::post('progress/login',[\App\Http\Controllers\AuthController::class, 'login'])->name('progress.login');
+
+Route::middleware('auth')->group(function (){
+    Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('index');
+    Route::resource('tasks',\App\Http\Controllers\TasksController::class);
+});
+
+Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin')->middleware('superrole');

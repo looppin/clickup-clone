@@ -1,0 +1,146 @@
+{% extends "layouts.base" %}
+
+{% block content %}
+    <div class="w-full px-4 md:px-0 md:mt-8 mb-16 text-gray-800 leading-normal">
+
+        <!--Console Content-->
+
+        <div class="flex flex-wrap">
+            <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                <!--Metric Card-->
+                <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
+                    <div class="flex flex-row items-center">
+                        <div class="flex-shrink pr-4">
+                            <div class="rounded p-3 bg-green-600"><i class="fa fa-wallet fa-2x fa-fw fa-inverse"></i></div>
+                        </div>
+                        <div class="flex-1 text-right md:text-center">
+                            <h5 class="font-bold uppercase text-gray-400">Toplam Borcunuz</h5>
+                            <h3 class="font-bold text-3xl text-gray-600">{{ total }} TL</h3>
+                        </div>
+                    </div>
+                </div>
+                <!--/Metric Card-->
+            </div>
+            <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                <!--Metric Card-->
+                <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
+                    <div class="flex flex-row items-center">
+                        <div class="flex-shrink pr-4">
+                            <div class="rounded p-3 bg-pink-600"><i class="fas fa-users fa-2x fa-fw fa-inverse"></i></div>
+                        </div>
+                        <div class="flex-1 text-right md:text-center">
+                            <h5 class="font-bold uppercase text-gray-400">Toplam Task</h5>
+                            <h3 class="font-bold text-3xl text-gray-600">{{ tasksTotal }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <!--/Metric Card-->
+            </div>
+            <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                <!--Metric Card-->
+                <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
+                    <div class="flex flex-row items-center">
+                        <div class="flex-shrink pr-4">
+                            <div class="rounded p-3 bg-yellow-600"><i class="fas fa-user-plus fa-2x fa-fw fa-inverse"></i></div>
+                        </div>
+                        <div class="flex-1 text-right md:text-center">
+                            <h5 class="font-bold uppercase text-gray-400">Tamamlanan Tasklar</h5>
+                            <h3 class="font-bold text-3xl text-gray-600">{{ tasksComplete }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <!--/Metric Card-->
+            </div>
+            <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                <!--Metric Card-->
+                <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
+                    <div class="flex flex-row items-center">
+                        <div class="flex-shrink pr-4">
+                            <div class="rounded p-3 bg-blue-600"><i class="fas fa-server fa-2x fa-fw fa-inverse"></i></div>
+                        </div>
+                        <div class="flex-1 text-right md:text-center">
+                            <h5 class="font-bold uppercase text-gray-400">Bugün Tamamlananlar</h5>
+                            <h3 class="font-bold text-3xl text-gray-600">{{ tasksTodayComplete }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <!--/Metric Card-->
+            </div>
+            <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                <!--Metric Card-->
+                <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
+                    <div class="flex flex-row items-center">
+                        <div class="flex-shrink pr-4">
+                            <div class="rounded p-3 bg-indigo-600"><i class="fas fa-tasks fa-2x fa-fw fa-inverse"></i></div>
+                        </div>
+                        <div class="flex-1 text-right md:text-center">
+                            <h5 class="font-bold uppercase text-gray-400">Kapanan Tasklar</h5>
+                            <h3 class="font-bold text-3xl text-gray-600">{{ tasksCancel }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <!--/Metric Card-->
+            </div>
+            <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                <!--Metric Card-->
+                <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
+                    <div class="flex flex-row items-center">
+                        <div class="flex-shrink pr-4">
+                            <div class="rounded p-3 bg-red-600"><i class="fas fa-inbox fa-2x fa-fw fa-inverse"></i></div>
+                        </div>
+                        <div class="flex-1 text-right md:text-center">
+                            <h5 class="font-bold uppercase text-gray-400">Cevap Beklenen Tasklar</h5>
+                            <h3 class="font-bold text-3xl text-gray-600">{{ tasksWaiting }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <!--/Metric Card-->
+            </div>
+        </div>
+
+        <!--Divider-->
+        <hr class="border-b-2 border-gray-600 my-8 mx-4">
+
+
+
+
+        <div class="w-6/12 mx-auto text-center pb-3">
+            <!-- Using utilities: -->
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="window.taskAdd();">
+                Task Ekle
+            </button>
+        </div>
+
+        <!--/ Console Content-->
+        <div class="w-6/12 mx-auto rounded border">
+            <div class="bg-white p-10 shadow-sm">
+                <h3 class="text-lg font-medium text-gray-800">Yukarıda Eklenen Taskları Aşağıda Görüntüleyebilirsiniz.</h3>
+
+                <div class="h-1 w-full mx-auto border-b my-5"></div>
+
+                {% if tasks.title %}
+                    <!-- What is term -->
+                    <div class="transition hover:bg-indigo-50">
+                        <!-- header -->
+                        <div class="accordion-header cursor-pointer transition flex space-x-5 px-5 items-center h-16">
+                            <i class="fas fa-plus"></i>
+                            <h3>What is term?</h3>
+                        </div>
+                        <!-- Content -->
+                        <div class="accordion-content px-5 pt-0 overflow-hidden max-h-0" style="max-height: 0px;">
+                            <p class="leading-6 font-light pl-9 text-justify">
+                                Our asked sex point her she seems. New plenty she horses parish design you. Stuff sight equal of my woody. Him children bringing goodness suitable she entirely put
+                                far daughter.
+                            </p>
+                            <button class="rounded-full bg-indigo-600 text-white font-medium font-lg px-6 py-2 my-5 ml-9">Detayları Gör</button>
+                        </div>
+                    </div>
+                {% else %}
+                    <p>Görünürde task bulunmuyor!</p>
+                {% endif %}
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
