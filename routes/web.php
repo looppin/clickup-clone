@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 //Auth
 Route::get('/login', [\App\Http\Controllers\AuthController::class,'index'])->name('login');
+Route::get('/logout',[\App\Http\Controllers\AuthController::class,'logout'])->name('logout');
 Route::post('progress/login',[\App\Http\Controllers\AuthController::class, 'login'])->name('progress.login');
 
 Route::middleware('auth')->group(function (){

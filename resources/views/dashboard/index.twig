@@ -114,7 +114,7 @@
         <!--/ Console Content-->
         <div class="w-6/12 mx-auto rounded border">
             <div class="bg-white p-10 shadow-sm">
-                <h3 class="text-lg font-medium text-gray-800">Yukarıda Eklenen Taskları Aşağıda Görüntüleyebilirsiniz.</h3>
+                <h3 class="text-lg font-medium text-gray-800">Tamamlanmayı Bekleyen Tasklar</h3>
 
                 <div class="h-1 w-full mx-auto border-b my-5"></div>
 
@@ -133,7 +133,14 @@
                                 <p class="leading-6 font-light pl-9 text-justify">
                                     {{ task.description }}
                                 </p>
-                                <button class="rounded-full bg-indigo-600 text-white font-medium font-lg px-6 py-2 my-5 ml-9">Detayları Gör</button>
+                                <div class="md:mt-8">
+                                    <span>Başlangıç Tarihi: {{ task.begins_date }}</span><br>
+                                    <span>Bitiş Tarihi: {{ task.ends_at }}</span><br>
+                                </div>
+                                <div class="text-center">
+                                    <button class="rounded-full bg-indigo-600 text-white font-medium font-lg px-6 py-2 my-5 ml-9">Detayları Gör</button>
+                                </div>
+
                             </div>
                         </div>
                     {% endfor %}
